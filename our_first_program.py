@@ -12,7 +12,7 @@ def personalized_greeting(name, course_code):
     print(f"Hello {name}, welcome to {course_code} !!!") 
 
 personalized_greeting("Richard", "COMP 170")
-personalized_greeting("Kofi", "COMP 170")
+personalized_greeting("Leo", "COMP 170")
 
 print()
 
