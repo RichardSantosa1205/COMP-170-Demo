@@ -397,4 +397,46 @@ def exists(value: int, values: list[int]) -> bool:
 demo = [1,2,3]
 print(find_max(demo))
 
-# June 17 Code
+# June 18 Code
+# a simple string array
+
+zoom_call = ["Kofi", "Leo", "Lula", "Lillie", "Elizabeth", "Emmanuel", "Ben", "Delaney", "Heather", "Omar"]
+
+middle_of_array = len(zoom_call) // 2
+
+print(middle_of_array)
+
+print("Middle element of array: " + zoom_call[middle_of_array])
+
+left_half = zoom_call[0:middle_of_array]
+right_half = zoom_call[middle_of_array:len(zoom_call)]
+
+print(f"{left_half=}")
+print(f"{right_half=}")
+
+simplified_left_half = zoom_call[:middle_of_array]
+simplified_right_half = zoom_call[middle_of_array:]
+
+print(f"{simplified_left_half=}\n{simplified_right_half=}")
+
+# June 23 Code
+def our_upper_case(word:str) -> str:
+    result = None
+    if len(word) > 0:
+        result = ""
+        for i in range(len(word)):
+            current_character = word[i]
+            # find the ascii value of the current character
+            current_ascii = ord(current_character)
+            # Subtract to bring to upper case
+            new_ascii = current_ascii - 32
+            # create a new symbol with this ascii code
+            new_character = chr(new_ascii)
+            # concatenate new char to the output string
+            result = result + new_character
+    # done
+    return result
+
+# quick demo
+print(our_upper_case("Leo9"))
+
