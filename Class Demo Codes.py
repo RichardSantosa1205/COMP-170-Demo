@@ -489,3 +489,93 @@ file_name =  "README.md"
 with open(path_to_file + file_name) as local_file:
     contents_of_local_file = local_file.read()
     print(f"\n\nContents of {file_name}:\n\n{contents_of_local_file}\n")
+
+# July 1 Code
+import requests
+
+book_url = "https://www.gutenberg.org/cache/epub/98/pg98.txt"
+
+# Establish connection to website
+
+connection = requests.get(book_url, stream=True)
+
+line_counter = 0
+word_count = 0
+for line in connection.iter_lines():
+    if line:
+        line_counter += 1
+        word_count += len(line.split())
+
+print(f"There are {line_counter:,d} lines in the book")
+print(f"THere are {word_count:,d} words.")
+
+
+
+some_words = ["it", "was", "a", "dark", "and", "stormy", "night"]
+char_count = 0
+for word in some_words:
+    char_count += len(word)
+print(char_count)
+
+# Where to find the file
+path_to_file = "/workspaces/comp-170-su25-live-coding/data/"
+file_name = "temperatures.txt" \
+
+# initialize accumulator
+temperature_average = 0
+count = 0
+# connect to the file
+with open(path_to_file+file_name, "r") as our_data_file:
+    for line in our_data_file:
+        temperature = int(line)
+        temperature_average += temperature
+        count += 1
+
+# Compute average and return
+temperature_average /= count
+print(f"\nThe temperature over a period of {count} days is {temperature_average:.2f}\n")
+
+outliar_margin = 0.33
+with open(path_to_file+file_name) as our_data_file:
+    for line in our_data_file:
+        value = float(line)
+        if value < temperature_average*(1-outliar_margin) or value > temperature_average*(1+outliar_margin):
+            print(f"\nOutliar: {value}")
+
+# July 2 Code
+import requests
+
+book_url = "https://www.gutenberg.org/cache/epub/98/pg98.txt"
+
+# Establish connection to PG webserver
+connection = requests.get(book_url)
+# Initialize a dictionary to count word frequencies
+frequency_of = dict()
+
+for text_line in connection.iter_lines():
+    # make sure line is not empty
+    if text_line:
+        text_line = text_line.decode('utf-8')
+        words = text_line.split()
+        for word in words:
+            # Ask if this word is in the dictionary
+            if word in frequency_of:
+                frequency_of[word] = frequency_of[word] + 1
+            else:
+                frequency_of[word] = 1
+
+print(f"\n\nThere are {len(frequency_of):,d} words in the book\n")
+
+highest_frequency = 0
+most_frequent_word = ""
+# iterate over the dictionary, obtaining its key-value pairs, one at a time
+for word, count in frequency_of.items():
+    if count > highest_frequency:
+        highest_frequency = count
+        most_frequent_word = word
+    if count == 1:
+        print(f"\nunique word: {word}")
+
+print(f"\n{most_frequent_word=} with {highest_frequency=}\n")
+
+# July 7 Code
