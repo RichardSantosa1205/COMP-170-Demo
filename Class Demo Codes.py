@@ -578,4 +578,163 @@ for word, count in frequency_of.items():
 
 print(f"\n{most_frequent_word=} with {highest_frequency=}\n")
 
-# July 7 Code
+# Object Oriented Programing
+
+#Animal
+class Animal:
+
+    def __init__(self, species, color:str, weight:int, fur:bool=True, mammal:bool=True, vocalization:str=""):
+        self.species = species 
+        self.color = color
+        self.weight = weight
+        self.fur = fur
+        self.mammal = mammal
+        self.vocalization = vocalization
+
+    def animal_says(self):
+        print(f"I am a {self.species} and I say: {self.vocalization}")
+
+#Bird
+class Bird:
+    
+    def __init__(self, color):
+        self.color = color
+    
+    def bird_say(self):
+        print("chirp")
+
+#Cat
+class Cat:
+
+    def __init__(self, color):
+        self.color = color
+    
+    def cat_says(self):
+        print("meow")
+
+#Dog
+from Animal import Animal
+
+class Dog(Animal):
+    pass
+    
+
+milo = Dog("dog", "chocolate", 45, True, True, "woof")
+
+milo.animal_says()
+
+#Goat
+class Goat:
+    
+    def __init__(self, color):
+        self.color = color
+    
+    def goat_says(self):
+        print("bah")
+
+#Gold Fish
+class GoldFish:
+
+    def __init__(self, color):
+        self.color = color
+
+    def goldfish_says(self):
+        print()
+
+#Person
+from datetime import date
+
+class Person:
+
+    # define state: what are the variables of the object
+    # The best way to show an object's variables (aka attributes or fields)
+    # is to show how an object is instantiated.
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+        self._ssn = -1 # private please
+        self._dob = None
+
+    # define behavior: what are the method the object offers?
+    def introduce(self):
+        print(f"\nHello, my name is {self.first_name} and I am {self.get_age()} years old.")
+
+    def set_ssn(self, ssn: int) -> None:
+        # simple rule: SSNs cannot have all-0s in any of their parts. For example,
+        # 000-GG-SSSS, AAA-00-SSSS, and AAA-GG-0000 are illegal values. The method
+        # should not allow such values. If SSN security number is to be represented
+        # as an integer, then 000-GG-SSSS becomes GGS,SSS whose greatest value is
+        # 999,999. So any SSN has to have an int value > 999,999, etc. We wont 
+        # worry about the other restrictions for now because, really, SSN, should be
+        # an object itself, not an int variable.
+        if ssn < 1_000_000:
+            raise ValueError("SSN cannot start with 000")
+        else:
+            self._ssn = ssn
+    
+    
+    def set_dob(self, year, month, day):
+        self._dob = date(year, month, day)
+    
+    def get_age(self):
+        age = -1
+        if self._dob:
+            today = date.today()
+            age = today.year-self._dob.year
+            if (today.month, today.day) < (self._dob.month, self._dob.day):
+                age -= 1
+        return age
+    
+    def get_name(self):
+        return self.first_name
+    
+    def __str__(self):
+        return f"[ {self.first_name} {self.last_name}]"
+    
+    def __lt__(self, other):
+        return self.get_age() < other.get_age()
+    #def __gt__(self, other):
+    #    return self.get_age() > other.get_age()
+
+#Implement_Person
+from Person import Person
+
+persons = list()
+
+a_hobit = (Person("Frodo", "Baggins"))
+another_hobbit = (Person("Bilbo", "Baggins"))
+bad_wizard = (Person("Saruman", "the White"))
+good_wizard = (Person("Gandal", "the Gray"))
+
+a_hobit.set_dob(1900, 1, 1)
+another_hobbit.set_dob(1800, 1, 1)
+bad_wizard.set_dob(1200, 1, 1)
+good_wizard.set_dob(1200, 2, 2)
+
+if good_wizard == bad_wizard:
+    print(f"{good_wizard.get_name()} is same age as {bad_wizard.get_name()}")
+
+#Sorting
+def naive_sorting(our_data: list[int]):
+    # Consider a progressively decreasing version of
+    # our input array
+    for end in range(len(our_data), 1, -1):
+        # Find the largest element in this version of the array
+        # Assume largest is the first element
+        largest = 0
+        for i in range(1, end):
+            if our_data[i] > our_data[largest]:
+                largest = i
+        # When the loop ends, largest points to the largest
+        # element in range 0...end-1. Place the largest element
+        # at position end-1 and whatever was at position end-1
+        # at position largest
+        temp = our_data[largest]
+        our_data[largest] = our_data[end - 1]
+        our_data[end - 1] = temp
+    return our_data
+
+#  test
+demo = [9,4,3,8,7,1,6,2]
+print(naive_sorting(demo))
+
